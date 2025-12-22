@@ -56,42 +56,67 @@ const SportsSection = () => {
           {sports.map((sport, index) => (
             <motion.div
               key={sport.name}
-              initial={{ opacity: 0, y: 30, rotateY: -15 }}
+              initial={{ opacity: 0, y: 50, rotateY: -30 }}
               whileInView={{ opacity: 1, y: 0, rotateY: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
+              transition={{ duration: 0.6, delay: index * 0.15, type: "spring" }}
               whileHover={{ 
-                scale: 1.05, 
-                rotateY: 5,
-                transition: { duration: 0.3 }
+                scale: 1.08, 
+                rotateY: 8,
+                z: 50,
+                boxShadow: "0 0 40px hsl(185 100% 50% / 0.3)"
               }}
-              className="glass gradient-border rounded-2xl p-6 text-center card-hover group cursor-pointer"
+              className="glass gradient-border rounded-2xl p-6 text-center group cursor-pointer relative overflow-hidden"
               style={{ transformStyle: 'preserve-3d' }}
             >
+              {/* Background glow */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10 opacity-0 group-hover:opacity-100"
+                transition={{ duration: 0.5 }}
+              />
+
               <motion.div 
-                className="text-primary mb-4 flex justify-center"
-                whileHover={{ rotate: 360 }}
+                className="text-primary mb-4 flex justify-center relative z-10"
+                whileHover={{ rotate: 360, scale: 1.2 }}
                 transition={{ duration: 0.6 }}
               >
                 {sport.icon}
               </motion.div>
               
-              <span className="text-4xl mb-3 block">{sport.emoji}</span>
+              <motion.span 
+                className="text-4xl mb-3 block"
+                animate={{ 
+                  y: [0, -5, 0],
+                  rotate: [0, 5, -5, 0]
+                }}
+                transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+              >
+                {sport.emoji}
+              </motion.span>
               
-              <h3 className="font-orbitron text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors">
+              <h3 className="font-orbitron text-lg font-bold text-foreground mb-1 group-hover:text-primary transition-colors relative z-10">
                 {sport.name}
               </h3>
               
-              <p className="text-sm text-primary font-cairo font-bold mb-2">
+              <p className="text-sm text-primary font-cairo font-bold mb-2 relative z-10">
                 {sport.nameAr}
               </p>
               
-              <p className="text-xs text-muted-foreground font-cairo">
+              <p className="text-xs text-muted-foreground font-cairo relative z-10">
                 {sport.description}
               </p>
               
-              {/* Hover Glow */}
-              <div className="absolute inset-0 rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              {/* Corner decorations */}
+              <motion.div
+                className="absolute top-2 left-2 w-3 h-3 border-l-2 border-t-2 border-primary/50 opacity-0 group-hover:opacity-100"
+                initial={{ scale: 0 }}
+                whileHover={{ scale: 1 }}
+              />
+              <motion.div
+                className="absolute bottom-2 right-2 w-3 h-3 border-r-2 border-b-2 border-accent/50 opacity-0 group-hover:opacity-100"
+                initial={{ scale: 0 }}
+                whileHover={{ scale: 1 }}
+              />
             </motion.div>
           ))}
         </div>

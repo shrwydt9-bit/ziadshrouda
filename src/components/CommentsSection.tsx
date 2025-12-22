@@ -108,11 +108,31 @@ const CommentsSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h2 className="font-orbitron text-3xl md:text-5xl font-bold text-primary text-glow mb-4">
+          <motion.h2 
+            className="font-orbitron text-3xl md:text-5xl font-bold text-primary text-glow mb-4"
+            animate={{ 
+              textShadow: [
+                "0 0 10px hsl(185 100% 50% / 0.5)",
+                "0 0 25px hsl(185 100% 50% / 0.8)",
+                "0 0 10px hsl(185 100% 50% / 0.5)"
+              ]
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
             💬 اترك رسالة
-          </h2>
-          <p className="text-muted-foreground font-cairo text-lg">التعليقات تظهر في الوقت الحقيقي للجميع!</p>
-          <div className="h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-primary to-transparent rounded-full mt-4" />
+          </motion.h2>
+          <motion.p 
+            className="text-muted-foreground font-cairo text-lg"
+            animate={{ opacity: [0.7, 1, 0.7] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            التعليقات تظهر في الوقت الحقيقي للجميع!
+          </motion.p>
+          <motion.div 
+            className="h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-primary to-transparent rounded-full mt-4"
+            animate={{ scaleX: [1, 1.3, 1], opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          />
         </motion.div>
 
         {/* Comment Form */}
@@ -165,16 +185,24 @@ const CommentsSection = () => {
             {comments.map((comment, index) => (
               <motion.div
                 key={comment.id}
-                initial={{ opacity: 0, x: -20, scale: 0.95 }}
-                animate={{ opacity: 1, x: 0, scale: 1 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="glass rounded-xl p-4 border border-border/30 hover:border-primary/30 transition-colors"
+                initial={{ opacity: 0, x: -30, scale: 0.9, rotateX: -20 }}
+                animate={{ opacity: 1, x: 0, scale: 1, rotateX: 0 }}
+                exit={{ opacity: 0, x: 30, scale: 0.9 }}
+                transition={{ duration: 0.5, delay: index * 0.05, type: "spring" }}
+                whileHover={{ 
+                  scale: 1.02, 
+                  boxShadow: "0 0 20px hsl(185 100% 50% / 0.2)"
+                }}
+                className="glass rounded-xl p-4 border border-border/30 hover:border-primary/50 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
+                  <motion.div 
+                    className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-accent/20 flex items-center justify-center flex-shrink-0"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.5 }}
+                  >
                     <User className="w-5 h-5 text-primary" />
-                  </div>
+                  </motion.div>
                   
                   <div className="flex-1 text-right" dir="rtl">
                     <div className="flex items-center justify-between mb-2">
