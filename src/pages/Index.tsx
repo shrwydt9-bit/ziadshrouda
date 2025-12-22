@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import ParticlesBackground from '@/components/ParticlesBackground';
 import HeroSection from '@/components/HeroSection';
 import PhotoGallery from '@/components/PhotoGallery';
+import VideosSection from '@/components/VideosSection';
 import SportsSection from '@/components/SportsSection';
 import CommentsSection from '@/components/CommentsSection';
 import MusicPlayer from '@/components/MusicPlayer';
@@ -23,6 +24,7 @@ const Index = () => {
         <main className="relative z-10">
           <HeroSection />
           <PhotoGallery />
+          <VideosSection />
           <SportsSection />
           <CommentsSection />
         </main>

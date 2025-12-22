@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Camera, Sparkles } from 'lucide-react';
 import ziad1 from '@/assets/ziad-1.jpg';
 import ziad2 from '@/assets/ziad-2.jpg';
 import ziad3 from '@/assets/ziad-3.jpg';
@@ -37,56 +37,61 @@ const PhotoGallery = () => {
   };
 
   return (
-    <section id="gallery" className="py-20 px-4">
-      <div className="max-w-6xl mx-auto">
+    <section id="gallery" className="py-24 px-4 relative">
+      {/* Section divider */}
+      <div className="section-divider w-full absolute top-0" />
+      
+      <div className="max-w-7xl mx-auto">
         {/* Section Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <motion.h2 
-            className="font-orbitron text-3xl md:text-5xl font-bold text-primary text-glow mb-4"
-            animate={{ 
-              textShadow: [
-                "0 0 10px hsl(185 100% 50% / 0.5)",
-                "0 0 20px hsl(185 100% 50% / 0.8)",
-                "0 0 10px hsl(185 100% 50% / 0.5)"
-              ]
-            }}
-            transition={{ duration: 2, repeat: Infinity }}
+          <motion.div
+            className="inline-flex items-center gap-3 mb-4"
+            initial={{ scale: 0 }}
+            whileInView={{ scale: 1 }}
+            transition={{ type: "spring", delay: 0.2 }}
           >
-            📸 معرض الصور
-          </motion.h2>
+            <Camera className="w-8 h-8 text-accent" />
+            <h2 className="font-bebas text-5xl md:text-7xl tracking-wider text-primary text-glow">
+              معرض الصور
+            </h2>
+            <Sparkles className="w-8 h-8 text-accent" />
+          </motion.div>
+          <p className="text-muted-foreground font-cairo text-lg">اللحظات المميزة</p>
           <motion.div 
-            className="h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-primary to-transparent rounded-full"
-            animate={{ scaleX: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 3, repeat: Infinity }}
+            className="h-1 w-48 mx-auto bg-gradient-to-r from-primary via-accent to-primary rounded-full mt-6"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            transition={{ duration: 1 }}
           />
         </motion.div>
 
-        {/* Photo Grid */}
+        {/* Photo Grid - Masonry Style */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           {photos.map((photo, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, scale: 0.8, rotateY: -30 }}
-              whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ 
-                scale: 1.08, 
-                rotateY: 5,
-                z: 50,
-                transition: { duration: 0.3 }
+                scale: 1.05,
+                zIndex: 10,
               }}
-              className="relative group cursor-pointer"
+              className={`relative group cursor-pointer ${
+                index === 0 || index === 5 ? 'md:row-span-2' : ''
+              }`}
               onClick={() => setSelectedIndex(index)}
-              style={{ transformStyle: 'preserve-3d' }}
             >
-              <div className="aspect-square overflow-hidden rounded-2xl gradient-border image-shine">
+              <div className={`overflow-hidden rounded-2xl gradient-border image-shine ${
+                index === 0 || index === 5 ? 'aspect-[3/4]' : 'aspect-square'
+              }`}>
                 <motion.img
                   src={photo.src}
                   alt={photo.alt}
@@ -97,33 +102,25 @@ const PhotoGallery = () => {
                 
                 {/* Overlay */}
                 <motion.div 
-                  className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
                 
                 {/* Glow Effect */}
                 <motion.div 
-                  className="absolute inset-0 rounded-2xl pointer-events-none"
-                  initial={{ boxShadow: "0 0 0 0 hsl(185 100% 50% / 0)" }}
-                  whileHover={{ boxShadow: "0 0 30px 5px hsl(185 100% 50% / 0.3)" }}
-                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity"
+                  style={{ boxShadow: "0 0 40px 10px hsl(340 90% 55% / 0.4)" }}
                 />
 
+                {/* Number indicator */}
+                <motion.div
+                  className="absolute bottom-3 right-3 w-10 h-10 rounded-full glass-dark flex items-center justify-center font-orbitron text-primary text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  {index + 1}
+                </motion.div>
+
                 {/* Corner accents */}
-                <motion.div
-                  className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-primary opacity-0 group-hover:opacity-100"
-                  initial={{ scale: 0 }}
-                  whileHover={{ scale: 1 }}
-                  transition={{ duration: 0.2 }}
-                />
-                <motion.div
-                  className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-accent opacity-0 group-hover:opacity-100"
-                  initial={{ scale: 0 }}
-                  whileHover={{ scale: 1 }}
-                  transition={{ duration: 0.2, delay: 0.1 }}
-                />
+                <div className="absolute top-3 left-3 w-6 h-6 border-l-2 border-t-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-3 left-3 w-6 h-6 border-l-2 border-b-2 border-accent opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </motion.div>
           ))}
@@ -137,11 +134,11 @@ const PhotoGallery = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-background/95 backdrop-blur-xl p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-background/98 backdrop-blur-xl p-4"
             onClick={() => setSelectedIndex(null)}
           >
             <motion.button
-              className="absolute top-4 right-4 p-2 text-foreground hover:text-primary transition-colors z-10"
+              className="absolute top-6 right-6 p-3 glass-dark rounded-full text-foreground hover:text-primary transition-colors z-10"
               whileHover={{ scale: 1.2, rotate: 90 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -150,7 +147,7 @@ const PhotoGallery = () => {
 
             {/* Navigation */}
             <motion.button
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-3 glass rounded-full text-foreground hover:text-primary transition-colors z-10"
+              className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 p-4 glass-dark rounded-full text-foreground hover:text-primary transition-colors z-10"
               whileHover={{ scale: 1.1, x: -5 }}
               whileTap={{ scale: 0.9 }}
               onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
@@ -159,7 +156,7 @@ const PhotoGallery = () => {
             </motion.button>
 
             <motion.button
-              className="absolute right-4 top-1/2 -translate-y-1/2 p-3 glass rounded-full text-foreground hover:text-primary transition-colors z-10"
+              className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 p-4 glass-dark rounded-full text-foreground hover:text-primary transition-colors z-10"
               whileHover={{ scale: 1.1, x: 5 }}
               whileTap={{ scale: 0.9 }}
               onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
@@ -175,18 +172,20 @@ const PhotoGallery = () => {
               transition={{ duration: 0.4, type: "spring" }}
               src={photos[selectedIndex].src}
               alt="Selected"
-              className="max-w-full max-h-[85vh] object-contain rounded-2xl box-glow"
+              className="max-w-full max-h-[85vh] object-contain rounded-2xl box-glow-intense"
               onClick={(e) => e.stopPropagation()}
             />
 
             {/* Photo counter */}
             <motion.div
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 glass rounded-full text-foreground font-orbitron"
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 glass-dark gradient-border rounded-full text-foreground font-orbitron"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              {selectedIndex + 1} / {photos.length}
+              <span className="text-primary">{selectedIndex + 1}</span>
+              <span className="mx-2 text-muted-foreground">/</span>
+              <span>{photos.length}</span>
             </motion.div>
           </motion.div>
         )}
