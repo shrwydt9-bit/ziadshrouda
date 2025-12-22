@@ -15,7 +15,7 @@
     --popover: 0 0% 7%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 45 100% 50%;
+    --primary: 185 100% 50%;
     --primary-foreground: 0 0% 4%;
 
     --secondary: 0 0% 12%;
@@ -24,20 +24,20 @@
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 65%;
 
-    --accent: 200 100% 50%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 280 100% 60%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
     --border: 0 0% 20%;
     --input: 0 0% 15%;
-    --ring: 45 100% 50%;
+    --ring: 185 100% 50%;
 
     --radius: 0.75rem;
 
-    --glow-primary: 45 100% 50%;
-    --glow-accent: 200 100% 50%;
+    --glow-primary: 185 100% 50%;
+    --glow-accent: 280 100% 60%;
   }
 }
 
